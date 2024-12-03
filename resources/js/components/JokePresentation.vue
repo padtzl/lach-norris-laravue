@@ -3,7 +3,7 @@
         <div class="text-xl mb-6 text-center text-white">
             {{ joke }}
         </div>
-        <div class="mt-8 text-center">
+        <div class="mt-8 mb-6 text-center">
             <BaseButton
                 type="button"
                 size="md"
@@ -14,6 +14,9 @@
                 {{ isLoading ? 'Loading...' : 'Get Another Joke' }}
             </BaseButton>
         </div>
+        <div class="absolute right-4 bottom-2" v-if="source">
+            <span class="text-white">Quelle: {{ source }}</span>
+        </div>
     </BaseCard>
 </template>
 
@@ -21,7 +24,8 @@
 import { onMounted, ref } from 'vue';
 import axios from 'axios';
 
-const joke = ref('');
+const joke = ref<string>('');
+const source = ref<string | null>(null);
 const isLoading = ref(false);
 
 const getNewJoke = async () => {
@@ -29,7 +33,7 @@ const getNewJoke = async () => {
     try {
         const response = await axios.get('/joke');
         joke.value = response.data.joke;
-        console.log(joke.value);
+        source.value = response.data.source;
     } catch (error) {
         joke.value = 'Failed to fetch a joke. Please try again.';
         console.error('Error fetching joke:', error);
