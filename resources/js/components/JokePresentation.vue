@@ -1,7 +1,8 @@
 <template>
     <BaseCard>
         <div class="text-xl mb-6 text-center text-white">
-            {{ joke }}
+            <h1 class="mb-4 text-xl font-bold">Chuck Norris Witz</h1>
+            <p>{{ joke }}</p>
         </div>
         <div class="mt-8 mb-6 text-center">
             <BaseButton
@@ -11,7 +12,7 @@
                 @click="getNewJoke"
                 :loading="isLoading"
             >
-                {{ isLoading ? 'Loading...' : 'Get Another Joke' }}
+                {{ isLoading ? 'Laden...' : 'Weiteren Witz laden' }}
             </BaseButton>
         </div>
         <div class="absolute right-4 bottom-2" v-if="source">
