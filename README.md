@@ -105,12 +105,10 @@ Stelle sicher, dass folgende Software auf deinem System installiert ist:
 
    **Alternativ:** Du kannst Supervisor konfigurieren, um die Queue Worker automatisch zu verwalten.
 
-2. **Entwicklungsserver starten:**
-
-   Starte den Entwicklungsserver mit Laravel Sail:
+2. **Vue App starten:**
 
    ```bash
-   ./vendor/bin/sail up
+   yarn dev
    ```
 
    Die Anwendung ist nun unter [http://localhost](http://localhost) erreichbar.
