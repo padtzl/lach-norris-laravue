@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Jobs\SaveJokeJob;
+use App\Models\ApiSetting;
 use App\Models\Joke;
 use Illuminate\Support\Facades\Http;
 use Exception;
@@ -13,29 +14,32 @@ class JokesService
 
     public function getRandomJoke(): array
     {
-        try {
-            $response = Http::get(self::API_URL);
+        //for showcase purpose
+        if (ApiSetting::isApiEnabled()) {
+            try {
+                $response = Http::get(self::API_URL);
 
-            if ($response->successful()) {
-                $jokeData = $response->json();
+                if ($response->successful()) {
+                    $jokeData = $response->json();
 
-                SaveJokeJob::dispatch(
-                    $jokeData['id'],
-                    $jokeData['value']
-                );
+                    SaveJokeJob::dispatch(
+                        $jokeData['id'],
+                        $jokeData['value']
+                    );
 
-                return [
-                    'joke' => $jokeData['value'],
-                    'source' => 'API'
-                ];
+                    return [
+                        'joke' => $jokeData['value'],
+                        'source' => 'API'
+                    ];
+                }
+                throw new Exception('Unable to retrieve joke via API'); //meeh
+
+            } catch (Exception $e) {
+                // Exception Handling - return fallback from database or error
+                return $this->getFallbackJoke();
             }
-            throw new Exception('Unable to retrieve joke via API'); //meeh
-
-        } catch (Exception $e) {
-            // Exception Handling - return fallback from database or error
-            return $this->getFallbackJoke();
         }
-
+        return $this->getFallbackJoke();
     }
 
     private function getFallbackJoke(): array
