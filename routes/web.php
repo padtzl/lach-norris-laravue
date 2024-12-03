@@ -9,6 +9,7 @@ Route::get('/', function () {
 });
 
 Route::get('/joke', [JokesController::class, 'index']);
+Route::get('/search', [JokesController::class, 'search']);
 
 Route::get('/api-settings', [ApiSettingController::class, 'index']);
 Route::post('/api-settings', [ApiSettingController::class, 'toggle']);
