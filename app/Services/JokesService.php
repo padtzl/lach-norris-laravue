@@ -58,4 +58,15 @@ class JokesService
             'source' => 'Database',
         ];
     }
+
+    public function analyzeJokes(string $words): array {
+        $words = preg_split('/[\s,]+/', $words, -1, PREG_SPLIT_NO_EMPTY);
+
+        $results = [];
+        foreach ($words as $word) {
+            $count = Joke::search($word)->get()->count();
+            $results[$word] = $count;
+        }
+        return $results;
+    }
 }

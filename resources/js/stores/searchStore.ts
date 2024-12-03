@@ -45,6 +45,16 @@ export const useSearchStore = defineStore('searchStore', {
     },
 
     actions: {
+        async analyzeJokes() {
+            try {
+                const response = await axios.get('/analyze', {
+                    params: { words: this.searchTerm },
+                });
+                console.log(response);
+            } catch (error) {
+                console.log(error);
+            }
+        },
         /**
          * @param term The search term entered by the user.
          * @param page The page number to fetch.

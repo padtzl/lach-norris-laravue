@@ -39,4 +39,15 @@ class JokesController extends Controller
 
         return response()->json($result);
     }
+
+    public function analyze(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'words' => 'required|string',
+        ]);
+
+        $results = $this->jokesService->analyzeJokes($validated['words']);
+
+        return response()->json($results);
+    }
 }
